@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Statistical Learning - Comprehensive Summary</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            border-radius: 15px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .overview {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            border-left: 5px solid #0ea5e9;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .overview h2 {
+            color: #0369a1;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .toc {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .toc h2 {
+            color: #4f46e5;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        .toc ol {
+            list-style: none;
+            counter-reset: chapter;
+        }
+
+        .toc li {
+            counter-increment: chapter;
+            margin-bottom: 10px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border-radius: 10px;
+            border-left: 4px solid #4f46e5;
+            transition: all 0.3s ease;
+        }
+
+        .toc li:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .toc li::before {
+            content: counter(chapter);
+            background: #4f46e5;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .toc a {
+            text-decoration: none;
+            color: #374151;
+            font-weight: 500;
+            font-size: 1.1em;
+        }
+
+        .toc a:hover {
+            color: #4f46e5;
+        }
+
+        .chapter {
+            background: #ffffff;
+            margin-bottom: 40px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid #4f46e5;
+        }
+
+        .chapter h2 {
+            color: #4f46e5;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+        }
+
+        .chapter-number {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .chapter-content {
+            margin-bottom: 20px;
+        }
+
+        .techniques {
+            background: #f0f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .techniques h4 {
+            color: #0369a1;
+            margin-bottom: 10px;
+        }
+
+        .techniques ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .techniques li {
+            background: white;
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border-left: 3px solid #0ea5e9;
+        }
+
+        .github-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #24292e, #586069);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .github-link:hover {
+            background: linear-gradient(135deg, #586069, #24292e);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .github-link::before {
+            content: "📓 ";
+            margin-right: 8px;
+        }
+
+        .algorithms-section {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+            border-left: 5px solid #f59e0b;
+        }
+
+        .algorithms-section h2 {
+            color: #92400e;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .algorithm-category {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .algorithm-category h3 {
+            color: #7c2d12;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .algorithm-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .algorithm-item {
+            background: #f97316;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .algorithm-item:hover {
+            background: #ea580c;
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .key-concept {
+            background: #dbeafe;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 3px solid #3b82f6;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .chapter {
+                padding: 20px;
+            }
+            
+            .toc li::before {
+                width: 25px;
+                height: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            
+            <p class="subtitle">Summary Of the book</p>
+            <p><strong>Course:</strong> MSDA9223 - Data Mining and Information Retrieval</p>
+            <p><strong>Names:</strong> Denyse Tuyishime |ID:100892 <strong>Date:</strong> July 6, 2025</p>
+        </header>
+
+        <section class="overview">
+            <h2>📖 Book Overview</h2>
+            <p>
+                <strong>"Introduction to Statistical Learning"</strong> is a comprehensive textbook that bridges the gap between 
+                theoretical statistical concepts and practical machine learning applications. Written by Gareth James, Daniela Witten, 
+                Trevor Hastie, and Robert Tibshirani, this book provides an accessible introduction to the essential tools and 
+                techniques used in statistical learning and data science.
+            </p>
+            <p>
+                The book emphasizes practical applications over mathematical rigor, making it an ideal resource for students and 
+                practitioners who want to understand and apply statistical learning methods effectively. Each chapter combines 
+                theoretical foundations with hands-on examples using R programming, providing readers with both conceptual 
+                understanding and practical skills.
+            </p>
+        </section>
+
+        <section class="toc">
+            <h2>📚 Table of Contents</h2>
+            <ol>
+                <li><a href="#chapter1">Introduction</a></li>
+                <li><a href="#chapter2">Linear Regression</a></li>
+                <li><a href="#chapter3">Classification</a></li>
+                <li><a href="#chapter4">Resampling Methods</a></li>
+                <li><a href="#chapter5">Linear Model Selection and Regularization</a></li>
+                <li><a href="#chapter6">Tree-based Methods</a></li>
+                <li><a href="#chapter7">Support Vector Machine</a></li>
+                <li><a href="#chapter8">Deep Learning</a></li>
+                <li><a href="#chapter9">Unsupervised Learning</a></li>
+                <li><a href="#chapter10">Text Mining</a></li>
+            </ol>
+        </section>
+
+        <section id="chapter1" class="chapter">
+            <h2><span class="chapter-number">1</span>Introduction</h2>
+            <div class="chapter-content">
+                <p>
+                    The introductory chapter establishes the fundamental concepts of statistical learning, distinguishing between 
+                    supervised and unsupervised learning approaches. It introduces the core terminology and mathematical framework 
+                    that underlies all subsequent chapters.
+                </p>
+                
+                <div class="highlight">
+                    <strong>Key Concepts:</strong>
+                    <div class="key-concept">Statistical Learning Framework</div>
+                    <div class="key-concept">Supervised vs Unsupervised Learning</div>
+                    <div class="key-concept">Regression vs Classification</div>
+                    <div class="key-concept">Model Assessment and Selection</div>
+                </div>
+
+                <div class="techniques">
+                    <h4>Main Ideas & Techniques:</h4>
+                    <ul>
+                        <li><strong>Input-Output Relationships:</strong> Understanding the relationship between predictors (X) and response (Y)</li>
+                        <li><strong>Prediction vs Inference:</strong> Distinguishing between predicting outcomes and understanding relationships</li>
+                        <li><strong>Parametric vs Non-parametric Methods:</strong> Different approaches to model estimation</li>
+                        <li><strong>Bias-Variance Trade-off:</strong> Fundamental concept in model complexity</li>
+                        <li><strong>Training vs Test Error:</strong> Evaluating model performance on unseen data</li>
+                    </ul>
+                </div>
+
+                <p><strong>Key Takeaways:</strong></p>
+                <ul>
+                    <li>Statistical learning provides a framework for extracting insights from data</li>
+                    <li>The choice between prediction and inference goals affects model selection</li>
+                    <li>Understanding the trade-off between model flexibility and interpretability is crucial</li>
+                    <li>Proper model assessment requires careful consideration of bias and variance</li>
+                </ul>
+            </div>
+           
+        </section>
+
+        <section id="chapter2" class="chapter">
+            <h2><span class="chapter-number">2</span>Linear Regression</h2>
+            <div class="chapter-content">
+                <p>
+                    Linear regression forms the foundation of statistical learning, providing a simple yet powerful approach to 
+                    modeling relationships between variables. This chapter covers both simple and multiple linear regression, 
+                    along with methods for model assessment and improvement.
+                </p>
+
+                <div class="highlight">
+                    <strong>Key Concepts:</strong>
+                    <div class="key-concept">Simple Linear Regression</div>
+                    <div class="key-concept">Multiple Linear Regression</div>
+                    <div class="key-concept">Least Squares Estimation</div>
+                    <div class="key-concept">Model Assessment Metrics</div>
+                </div>
+
+                <div class="techniques">
+                    <h4>Main Ideas & Techniques:</h4>
+                    <ul>
+                        <li><strong>Least Squares Method:</strong> Minimizing residual sum of squares for parameter estimation</li>
+                        <li><strong>Coefficient Interpretation:</strong> Understanding the meaning of regression coefficients</li>
+                        <li><strong>Hypothesis Testing:</strong> Testing significance of individual predictors</li>
+                        <li><strong>Confidence Intervals:</strong> Quantifying uncertainty in parameter estimates</li>
+                        <li><strong>Model Diagnostics:</strong> Checking assumptions through residual analysis</li>
+                        <li><strong>Categorical Variables:</strong> Handling qualitative predictors with dummy variables</li>
+                    </ul>
+                </div>
+
+                <p><strong>Key Takeaways:</strong></p>
+                <ul>
+                    <li>Linear regression assumes a linear relationship between predictors and response</li>
+                    <li>R-squared measures the proportion of variance explained by the model</li>
+                    <li>Model assumptions must be verified through diagnostic plots</li>
+                    <li>Interaction terms can capture non-additive effects between predictors</li>
+                </ul>
+            </div>
+            <a href="https://github.com/Denyse1/Data-mining/blob/main/Chapter%203.ipynb" class="github-link">Github Link </a>
+        </section>
+
+        <section id="chapter3" class="chapter">
+            <h2><span class="chapter-number">3</span>Classification</h2>
+            <div class="chapter-content">
+                <p>
+                    Classification methods are essential for predicting categorical outcomes. This chapter introduces logistic 
+                    regression, linear discriminant analysis, and other fundamental classification techniques, along with 
+                    methods for evaluating classifier performance.
+                </p>
+
+                <div class="highlight">
+                    <strong>Key Concepts:</strong>
+                    <div class="key-concept">Logistic Regression</div>
+                    <div class="key-concept">Linear Discriminant Analysis (LDA)</div>
+                    <div class="key-concept">Quadratic Discriminant Analysis (QDA)</div>
+                    <div class="key-concept">K-Nearest Neighbors (KNN)</div>
+                </div>
+
+                <div class="techniques">
+                    <h4>Main Ideas & Techniques:</h4>
+                    <ul>
+                        <li><strong>Logistic Function:</strong> Modeling probabilities using the logistic curve</li>
+                        <li><strong>Maximum Likelihood Estimation:</strong> Parameter estimation for logistic regression</li>
+                        <li><strong>Bayes' Theorem:</strong> Foundation for discriminant analysis methods</li>
+                        <li><strong>Decision Boundaries:</strong> Understanding how classifiers separate classes</li>
+                        <li><strong>Cross-Validation:</strong> Evaluating classification performance</li>
+                        <li><strong>ROC Curves:</strong> Assessing classifier performance across thresholds</li>
+                    </ul>
+                </div>
+
+                <p><strong>Key Takeaways:</strong></p>
+                <ul>
+                    <li>Logistic regression uses the logistic function to model probabilities</li>
+                    <li>LDA assumes equal covariance matrices across classes</li>
+                    <li>QDA allows for different covariance matrices per class</li>
+                    <li>KNN is a non-parametric method that can capture complex decision boundaries</li>
+                </ul>
+            </div>
+            <a href="https://github.com/Denyse1/Data-mining/blob/main/Chapter%204.ipynb" class="github-link">Github link</a>
+        </section>
+
+        <section id="chapter4" class="chapter">
+            <h2><span class="chapter-number">4</span>Resampling Methods</h2>
+            <div class="chapter-content">
+                <p>
+                    Resampling methods are crucial for model assessment and selection. This chapter covers cross-validation 
+                    and bootstrap methods, which provide robust approaches for estimating model performance and quantifying 
+                    uncertainty in statistical estimates.
+                </p>
+
+                <div class="highlight">
+                    <strong>Key Concepts:</strong>
+                    <div class="key-concept">Cross-Validation</div>
+                    <div class="key-concept">Bootstrap Method</div>
+                    <div class="key-concept">Leave-One-Out Cross-Validation (LOOCV)</div>
+                    <div class="key-concept">K-Fold Cross-Validation</div>
+                </div>
+
+                <div class="techniques">
+                    <h4>Main Ideas & Techniques:</h4>
+                    <ul>
+                        <li><strong>Validation Set Approach:</strong> Simple train-test split for model evaluation</li>
+                        <li><strong>LOOCV:</strong> Using each observation as a validation set</li>
+                        <li><strong>K-Fold CV:</strong> Dividing data into k folds for robust evaluation</li>
+                        <li><strong>Bootstrap Sampling:</strong> Resampling with replacement for uncertainty estimation</li>
+                        <li><strong>Bias-Variance Decomposition:</strong> Understanding sources of prediction error</li>
+                    </ul>
+                </div>
+
+                <p><strong>Key Takeaways:</strong></p>
+                <ul>
+                    <li>Cross-validation provides more robust estimates than single train-test splits</li>
+                    <li>LOOCV has low bias but high variance in estimate</li>
+                    <li>K-fold CV balances bias and variance effectively</li>
+                    <li>Bootstrap is particularly useful for estimating standard errors</li>
+                </ul>
+            </div>
+            <a href="https://github.com/Denyse1/Data-mining/blob/main/Chapter5-Resampling%20Method.ipynb" class="github-link">Github-link</a>
+        </section>
+
+        <section id="chapter5" class="chapter">
+            <h2><span class="chapter-number">5</span>Linear Model Selection and Regularization</h2>
+            <div class="chapter-content">
+                <p>
+                    This chapter addresses the challenge of selecting the most important variables and avoiding overfitting. 
+                    It introduces regularization techniques that constrain model complexity while maintaining predictive performance.
+                </p>
+
+                <div class="highlight">
+                    <strong>Key Concepts:</strong>
+                    <div class="key-concept">Ridge Regression</div>
+                    <div class="key-concept">Lasso Regression</div>
+                    <div class="key-concept">Elastic Net</div>
+                    <div class="key-concept">Principal Components Regression (PCR)</div>
+                </div>
+
+                <div class="techniques">
+                    <h4>Main Ideas & Techniques:</h4>
+                    <ul>
+                        <li><strong>Ridge Regression:</strong> L2 regularization to shrink coefficients</li>
+                        <li><strong>Lasso Regression:</strong> L1 regularization for variable selection</li>
+                        <li><strong>Elastic Net:</strong> Combining L1 and L2 penalties</li>
+                        <li><strong>Cross-Validation:</strong> Selecting optimal regularization parameters</li>
+                        <li><strong>Dimension Reduction:</strong> Reducing feature space complexity</li>
+                    </ul>
+                </div>
+
+                <p><strong>Key Takeaways:</strong></p>
+                <ul>
+                    <li>Ridge regression reduces overfitting by shrinking coefficients</li>
+                    <li>Lasso can perform automatic variable selection</li>
+                    <li>Regularization parameter tuning is crucial for performance</li>
+                    <li>Dimension reduction can improve model interpretability</li>
+                </ul>
+            </div>
+            <a href="https://github.com/Denyse1/Data-mining/blob/main/Chapter%206%20Linear%20Model%20Selection%20and%20Regularization%20Methods.ipynb" class="github-link">Github-Link</a>
+        </section>
+
+        <section id="chapter6" class="chapter">
+            <h2><span class="chapter-number">6</span>Tree-based Methods</h2>
+            <div class="chapter-content">
+                <p>
+                    Tree-based methods provide intuitive and interpretable models for both regression and classification. 
+                    This chapter covers decision trees, ensemble methods, and advanced techniques like random forests and boosting.
+                </p>
+
+                <div class="highlight">
+                    <strong>Key Concepts:</strong>
+                    <div class="key-concept">Decision Trees</div>
+                    <div class="key-concept">Random Forests</div>
+                    <div class="key-concept">Boosting</div>
+                    <div class="key-concept">Bagging</div>
+                </div>
+
+                <div class="techniques">
+                    <h4>Main Ideas & Techniques:</h4>
+                    <ul>
+                        <li><strong>Tree Construction:</strong> Recursive binary splitting using impurity measures</li>
+                        <li><strong>Pruning:</strong> Reducing tree complexity to prevent overfitting</li>
+                        <li><strong>Bagging:</strong> Bootstrap aggregating for variance reduction</li>
+                        <li><strong>Random Forests:</strong> Combining bagging with random feature selection</li>
+                        <li><strong>AdaBoost:</strong> Adaptive boosting for sequential learning</li>
+                        <li><strong>Gradient Boosting:</strong> Fitting models to residuals iteratively</li>
+                    </ul>
+                </div>
+
+                <p><strong>Key Takeaways:</strong></p>
+                <ul>
+                    <li>Decision trees are highly interpretable but prone to overfitting</li>
+                    <li>Ensemble methods combine multiple trees for better performance</li>
+                    <li>Random forests add randomness to reduce correlation between trees</li>
+                    <li>Boosting focuses on difficult-to-predict observations</li>
+                </ul>
+            </div>
+            <a href="https://github.com/Denyse1/Data-mining/blob/main/Chapter%208.ipynb" class="github-link">Github-Link</a>
+        </section>
+
+        <section id="chapter7" class="chapter">
+            <h2><span class="chapter-number">7</span>Support Vector Machine</h2>
+            <div class="chapter-content">
+                <p>
+                    Support Vector Machines (SVMs) are powerful methods for classification and regression that can handle 
+                    both linear and non-linear relationships. This chapter explores the mathematical foundation and practical 
+                    applications of SVMs.
+                </p>
+
+                <div class="highlight">
+                    <strong>Key Concepts:</strong>
+                    <div class="key-concept">Support Vector Classifier</div>
+                    <div class="key-concept">Support Vector Machine</div>
+                    <div class="key-concept">Kernel Trick</div>
+                    <div class="key-concept">Margin Maximization</div>
+                </div>
+
+                <div class="techniques">
+                    <h4>Main Ideas & Techniques:</h4>
+                    <ul>
+                        <li><strong>Maximum Margin Classifier:</strong> Finding optimal separating hyperplane</li>
+                        <li><strong>Soft Margin:</strong> Allowing some misclassification for better generalization</li>
+                        <li><strong>Kernel Functions:</strong> Polynomial, radial basis function, and linear kernels</li>
+                        <li><strong>Support Vectors:</strong> Observations that define the decision boundary</li>
+                        <li><strong>Parameter Tuning:</strong> Optimizing cost parameter and kernel parameters</li>
+                    </ul>
+                </div>
+
+                <p><strong>Key Takeaways:</strong></p>
+                <ul>
+                    <li>SVMs find the optimal margin between classes</li>
+                    <li>Kernel functions enable non-linear classification</li>
+                    <li>Only support vectors influence the final model</li>
+                    <li>SVMs work well in high-dimensional spaces</li>
+                </ul>
+            </div>
+            <a href="https://github.com/Denyse1/Data-mining/blob/main/Chapter%209.ipynb" class="github-link">Github-Link</a>
+        </section>
+
+        <section id="chapter8" class="chapter">
+            <h2><span class="chapter-number">8</span>Deep Learning</h2>
+            <div class="chapter-content">
+                <p>
+                    Deep learning has revolutionized machine learning by enabling models to learn complex patterns from data. 
+                    This chapter introduces neural networks, from basic perceptrons to deep architectures used in modern AI applications.
+                </p>
+
+                <div class="highlight">
+                    <strong>Key Concepts:</strong>
+                    <div class="key-concept">Neural Networks</div>
+                    <div class="key-concept">Backpropagation</div>
+                    <div class="key-concept">Convolutional Neural Networks (CNNs)</div>
+                    <div class="key-concept">Recurrent Neural Networks (RNNs)</div>
+                </div>
+
+                <div class="techniques">
+                    <h4>Main Ideas & Techniques:</h4>
+                    <ul>
+                        <li><strong>Multi-layer Perceptron:</strong> Basic neural network architecture</li>
+                        <li><strong>Activation Functions:</strong> ReLU, sigmoid, and tanh functions</li>
+                        <li><strong>Gradient Descent:</strong> Optimization algorithm for training</li>
+                        <li><strong>Dropout:</strong> Regularization technique for preventing overfitting</li>
+                        <li><strong>Batch Normalization:</strong> Stabilizing training process</li>
+                        <li><strong>Transfer Learning:</strong> Leveraging pre-trained models</li>
+                    </ul>
+                </div>
+
+                <p><strong>Key Takeaways:</strong></p>
+                <ul>
+                    <li>Deep networks can learn hierarchical representations</li>
+                    <li>Backpropagation enables efficient gradient computation</li>
+                    <li>CNNs excel at image recognition tasks</li>
+                    <li>RNNs are designed for sequential data processing</li>
+                </ul>
+            </div>
+            <a href="https://github.com/Denyse1/Data-mining/blob/main/chapter%2010.ipynb" class="github-link">Github-Link</a>
+        </section>
+
+        <section id="chapter9" class="chapter">
+            <h2><span class="chapter-number">9</span>Unsupervised Learning</h2>
+            <div class="chapter-content">
+                <p>
+                    Unsupervised learning methods discover hidden patterns in data without labeled responses. This chapter 
+                    covers clustering methods, dimension reduction techniques, and other exploratory data analysis approaches.
+                </p>
+
+                <div class="highlight">
+                    <strong>Key Concepts:</strong>
+                    <div class="key-concept">K-Means Clustering</div>
+                    <div class="key-concept">Hierarchical Clustering</div>
+                    <div class="key-concept">Principal Component Analysis (PCA)</div>
+                    <div class="key-concept">Matrix Factorization</div>
+                </div>
+
+                <div class="techniques">
+                    <h4>Main Ideas & Techniques:</h4>
+                    <ul>
+                        <li><strong>K-Means:</strong> Partitioning data into k clusters</li>
+                        <li><strong>Hierarchical Clustering:</strong> Building tree-like cluster structures</li>
+                        <li><strong>PCA:</strong> Finding principal components for dimension reduction</li>
+                        <li><strong>Cluster Validation:</strong> Evaluating clustering quality</li>
+                        <li><strong>Dimensionality Reduction:</strong> Reducing feature space while preserving information</li>
+                    </ul>
+                </div>
+
+                <p><strong>Key Takeaways:</strong></p>
+                <ul>
+                    <li>Clustering groups similar observations together</li>
+                    <li>PCA finds directions of maximum variance</li>
+                    <li>Choosing the number of clusters is often subjective</li>
+                    <li>Unsupervised learning is useful for exploratory analysis</li>
+                </ul>
+            </div>
+            <a href="#" class="github-link">Github-Link</a>
+        </section>
+
+        <section id="chapter10" class="chapter">
+            <h2><span class="chapter-number">10</span>Text Mining</h2>
+            <div class="chapter-content">
+                <p>
+                    Text mining applies statistical learning methods to textual data, enabling extraction of insights from 
+                    documents, social media, and other text sources. This chapter covers preprocessing,
